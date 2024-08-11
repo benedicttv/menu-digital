@@ -42,13 +42,16 @@ export default {
     },
     methods:{
         sum(){
-            this.$emit('sumar', this.data.plato.id)
+            const itemId = this.data.alternativa ? `${this.data.plato.id}-${this.data.alternativa}` : this.data.plato.id;
+            this.$emit('sumar', itemId)
         },
         res(){
-            this.$emit('restar', this.data.plato.id)
+            const itemId = this.data.alternativa ? `${this.data.plato.id}-${this.data.alternativa}` : this.data.plato.id;
+            this.$emit('restar', itemId)
         },
         eli(){
-            this.$emit('eliminar', this.data.plato.id)
+            const itemId = this.data.alternativa ? `${this.data.plato.id}-${this.data.alternativa}` : this.data.plato.id;
+            this.$emit('eliminar', itemId)
         },
     },
 }

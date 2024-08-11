@@ -197,11 +197,27 @@ export default {
             console.log(this.recibos)
         },
         sumar_item(resp){
-            console.log('sumando')
+            console.log(this.carrito[resp])
+
+            console.log('sumando');
+        
+            // Utilizar el identificador único en lugar del ID del plato
+            const item = this.carrito[resp];
+
+            // Incrementar la cantidad del ítem seleccionado
+            if (item) {
+                item.cantidad++;
+                localStorage.setItem('miOrden', JSON.stringify(this.carrito));
+                this.updateCarrito();
+            } else {
+                console.error('El ítem no fue encontrado en el carrito');
+            }
+        
+            /* console.log('sumando')
 
             this.carrito[resp].cantidad++
             localStorage.setItem('miOrden', JSON.stringify(this.carrito))
-            this.updateCarrito()
+            this.updateCarrito() */
 
         },
         restar_item(resp){

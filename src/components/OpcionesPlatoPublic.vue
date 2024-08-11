@@ -41,19 +41,28 @@ export default {
             }
 
             const makeItemId =()=>{
-                // crea un id para el item con el id del plato y el id de la alternativa
+                return `${this.plato.id}-${getAlternativa()}`;
             }
             const item = {
+                id: makeItemId(),
                 cantidad: cant.cantidad,
                 alternativa: getAlternativa(),
                 plato: this.plato,
                 total: total()
             }
+
             let miOrden = JSON.parse(orden)
             console.log(miOrden)
 
             //verifica si el item ya ha sido agregado
-            if(miOrden[item.plato.id]==undefined){
+            if (!miOrden[item.id]) {
+                miOrden[item.id] = item;
+            } else {
+                miOrden[item.id].cantidad += cant.cantidad;
+            }
+
+            //*****CODIGO ANTERIOR QUE FUNCIONABA PERO REEMPLAZABA LA ALTERNATIVA */
+            /* if(miOrden[item.plato.id]==undefined){
                 miOrden[item.plato.id] = item
             }else{
                 console.log(miOrden[item.plato.id])
@@ -64,7 +73,7 @@ export default {
                 }else{
                     miOrden[item.plato.id] = item
                 }
-            }
+            } */
             orden = JSON.stringify(miOrden)
             localStorage.setItem('miOrden', orden)
             this.$emit('item_agregado')
