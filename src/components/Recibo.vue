@@ -15,9 +15,13 @@
                 <span><b>Total</b></span>
             </div>
             <div class="recibo-layout" v-for="item in recibo.items" :key="item.plato.id">
-                <span>{{ item.cantidad}} x {{ item.plato.nombre}}</span>
-                <span>{{ item.plato.precio}}</span>
-                <span>{{ item.plato.precio * item.cantidad}}</span>
+                
+                <span v-if="item.alternativa">{{ item.cantidad}} x {{ item.plato.nombre }} - {{ item.plato.opcionesPlato[item.alternativa].name }}</span>
+                <span v-else>{{ item.cantidad}} x {{ item.plato.nombre }}</span>
+                <span v-if="item.alternativa">{{ item.plato.precio + item.plato.opcionesPlato[item.alternativa].precio}}</span>
+                <span v-else>{{ item.plato.precio}}</span>
+                <span v-if="item.alternativa">{{ (item.plato.precio+item.plato.opcionesPlato[item.alternativa].precio) * item.cantidad}}</span>
+                <span v-else>{{ item.plato.precio * item.cantidad}}</span>
             </div>
         </div>
     </div>

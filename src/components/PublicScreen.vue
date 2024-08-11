@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <HeaderGuest v-if="categoria_screen" :logo="logo_menu" :cantItems="cantItem" >
+    <HeaderGuest v-if="categoria_screen" :logo="logo_menu" :cantItems="cantItem" :num_whatsapp="numero_whatsapp">
 
         <Carrito :logo_restaurant="logo_menu" :cambios="cambios" @carritoLength="getCarritoLength"/>
 
@@ -37,7 +37,8 @@ export default {
             cantItem: 0,
             cambios: 0,
             ordenes: true,
-            unsub: null
+            unsub: null,
+            numero_whatsapp: null,
         }
     },
     provide() {
@@ -98,6 +99,8 @@ export default {
                         console.log("Document data:", doc.data());
                         this.negocio=doc.data()
                         this.descargarLogo(this.negocio.logoURL)
+
+                        this.numero_whatsapp = this.negocio.whatsapp
                         //cambiar el nombre de la pagina
                         document.title = 'Menu | '+this.negocio.nombre
                         //cambiar el favicon

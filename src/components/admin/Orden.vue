@@ -24,6 +24,7 @@
 
     <div v-for="item in data.items" :key="item.id" class="order-items">
         <span>{{ item.cantidad}} x {{item.plato.nombre}}</span>
+        <span v-if="item.alternativa"> — {{ item.plato.opcionesPlato[item.alternativa].name }}</span>
     </div>
   </div>
 </template>

@@ -22,7 +22,6 @@ export default {
     methods:{
         agregarItem(cant){
             let orden = localStorage.getItem("miOrden")
-            let plato_existe = false
             const total =()=>{
                 let precio = this.plato.precio
                 if (this.plato.opcionesPlato && this.plato.opcionesPlato.name){
@@ -60,20 +59,6 @@ export default {
             } else {
                 miOrden[item.id].cantidad += cant.cantidad;
             }
-
-            //*****CODIGO ANTERIOR QUE FUNCIONABA PERO REEMPLAZABA LA ALTERNATIVA */
-            /* if(miOrden[item.plato.id]==undefined){
-                miOrden[item.plato.id] = item
-            }else{
-                console.log(miOrden[item.plato.id])
-                console.log(item)
-                //verifica si es la misma alternativa
-                if(miOrden[item.plato.id].alternativa == item.alternativa){
-                    miOrden[item.plato.id].cantidad = miOrden[item.plato.id].cantidad+cant.cantidad
-                }else{
-                    miOrden[item.plato.id] = item
-                }
-            } */
             orden = JSON.stringify(miOrden)
             localStorage.setItem('miOrden', orden)
             this.$emit('item_agregado')

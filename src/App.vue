@@ -1,6 +1,3 @@
-<script setup>
-</script>
-
 <template>
   <div>
     <div v-if="menu_url">

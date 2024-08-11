@@ -8,8 +8,15 @@
         </div>
     </div>
     <div v-if="!loading" class="container" style="max-width: 350px">
-        <p class="fs-3 fw-bold">Iniciar Sesión</p>
-        <form @submit="singIngWhitEmail">
+        <p class="fs-3 fw-bold mb-4">Iniciar Sesión</p>
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <!-- Boton para iniciar con Google -->
+          <button @click="loginWithGoogle" type="button" class="btn btn-outline-primary mb-3">Iniciar con Google</button>
+        </div>
+        <div class="mb-3 text-center">
+          <span class="text-center">— o iniciar con email y contraseña —</span>
+        </div>
+        <form @submit="signInWithEmail">
           <div class="row mb-3">
             <label for="email" class="form-lable">Usuario:</label>
             <input @keyup="error=''" class="form-control" type="email" v-model="email" autocomplete="email" autofocus required>
@@ -28,7 +35,12 @@
           </button>
         </form>
         <div class="row mt-5">
-          <span style="color: gray">Versión Beta 0.1 *En desarrollo*</span>
+          <span style="color: gray">Versión Beta 0.3 *En desarrollo*</span>
+          <p style="color: gray">Última actualización: 11/8/24</p>
+          <ul class="fs-8">
+            <li style="color: gray">Se agregó una función que permite agregar alternativas a los platos.</li>
+            <li style="color: gray">Se agregó el botón que permite iniciar sesión y registrarse con Google.</li>
+          </ul>
         </div>
     </div>
 </div>
@@ -55,7 +67,7 @@ export default {
         }
     },
     methods:{
-      async singIngWhitEmail(e){
+      async signInWithEmail(e){
         e.preventDefault()
         this.signInWithEmailAndPassword(this.auth, this.email, this.password)
         .then(userCredential=>{
@@ -78,7 +90,7 @@ export default {
                 lastLogin: new Date()
             })
             this.loading = false
-            this.loginWhitGoogle()
+            this.loginWithGoogle()
             ////console.log(this.globalUser)
         },
         async getUserInfo(info){
@@ -97,7 +109,7 @@ export default {
             this.createNewUser(info)
             }
         },//getUserInfo
-        loginWhitGoogle(){
+        loginWithGoogle(){
         this.iniciando = true
         this.signInWithPopup(this.auth, this.gProvider)
         .then((result) => {

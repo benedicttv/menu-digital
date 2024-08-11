@@ -212,12 +212,6 @@ export default {
             } else {
                 console.error('El ítem no fue encontrado en el carrito');
             }
-        
-            /* console.log('sumando')
-
-            this.carrito[resp].cantidad++
-            localStorage.setItem('miOrden', JSON.stringify(this.carrito))
-            this.updateCarrito() */
 
         },
         restar_item(resp){

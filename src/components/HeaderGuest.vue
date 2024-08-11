@@ -14,8 +14,8 @@
     <img :src="logo" alt="Logo" loading="lazy">
     <!-- lado derecho -->
     <div class="bts-header">
-      <button style="opacity: 0.5">
-        <Bellservice class="icon-header"/>
+      <button type="button" class="btn" @click="abrirWhatsApp" :disabled="!num_whatsapp || num_whatsapp === ''">
+        <Bellservice class="icon-header"/><!-- debe abrir la app de whatsapp cuando hace click -->
       </button>
     </div>
   </header>
@@ -42,6 +42,10 @@ export default {
       },
       cantItems: {
         type: Number
+      },
+      num_whatsapp: {
+        type: String,
+        required: false
       }
     },
     data(){
@@ -55,6 +59,10 @@ export default {
       eliminarItem(){
         console.log('Elimando un item')
         this.$emit('eliminarItem')
+      },
+      abrirWhatsApp() { // Nuevo método para abrir WhatsApp
+        const whatsappUrl = `https://wa.me/+1${this.num_whatsapp}`;
+        window.open(whatsappUrl, '_blank');
       }
     }
 }
