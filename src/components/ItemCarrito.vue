@@ -42,15 +42,15 @@ export default {
     },
     methods:{
         sum(){
-            const itemId = this.data.alternativa ? `${this.data.plato.id}-${this.data.alternativa}` : this.data.plato.id;
+            const itemId = this.data.alternativa ? `${this.data.plato.id}-${this.data.alternativa}` : `${this.data.plato.id}-null`;
             this.$emit('sumar', itemId)
         },
         res(){
-            const itemId = this.data.alternativa ? `${this.data.plato.id}-${this.data.alternativa}` : this.data.plato.id;
+            const itemId = this.data.alternativa ? `${this.data.plato.id}-${this.data.alternativa}` : `${this.data.plato.id}-null`;
             this.$emit('restar', itemId)
         },
         eli(){
-            const itemId = this.data.alternativa ? `${this.data.plato.id}-${this.data.alternativa}` : this.data.plato.id;
+            const itemId = this.data.alternativa ? `${this.data.plato.id}-${this.data.alternativa}` : `${this.data.plato.id}-null`;
             this.$emit('eliminar', itemId)
         },
     },

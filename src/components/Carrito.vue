@@ -197,12 +197,11 @@ export default {
             console.log(this.recibos)
         },
         sumar_item(resp){
-            console.log(this.carrito[resp])
-
             console.log('sumando');
         
             // Utilizar el identificador único en lugar del ID del plato
             const item = this.carrito[resp];
+            console.log(resp)
 
             // Incrementar la cantidad del ítem seleccionado
             if (item) {
