@@ -14,8 +14,8 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-outline-primary mb-3 mt-2" style="font-family: var(--font-4)">
-            <i v-if="aceptarOrdenes" class="bi bi-bag-plus-fill shop-icon"></i> Agregar a la orden
+        <button v-if="aceptarOrdenes" class="btn btn-outline-primary mb-3 mt-2" style="font-family: var(--font-4)">
+            <i class="bi bi-bag-plus-fill shop-icon"></i> Agregar a la orden
         </button>
     </div>
   <OpcionesPlatoPublic :plato="data" @item_agregado="nuevo_item_orden"/>

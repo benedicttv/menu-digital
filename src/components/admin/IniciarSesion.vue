@@ -35,7 +35,7 @@
           </button>
         </form>
         <div class="row mt-5">
-          <span style="color: gray">Versión Beta 0.3 *En desarrollo*</span>
+          <span style="color: gray">Versión Beta 0.302 *En desarrollo*</span>
           <p style="color: gray">Última actualización: 11/8/24</p>
           <ul class="fs-8">
             <li style="color: gray">Se agregó una función que permite agregar alternativas a los platos.</li>
