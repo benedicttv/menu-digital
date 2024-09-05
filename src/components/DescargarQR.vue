@@ -23,11 +23,12 @@ export default {
     }
   },
   methods: {
-    async generarQR() {
+    async generarQR(codigoWebsite) {
+      console.log('Este es el valor de web:', codigoWebsite);
       try {
         const canvas = document.createElement('canvas')
         this.QrcodeImage = canvas
-        await QRCode.toCanvas(this.QrcodeImage, 'https://menu-rd.web.app/?menu='+this.website)
+        await QRCode.toCanvas(this.QrcodeImage, `https://menu-rd.web.app/?menu=${codigoWebsite}`)
         console.log('QR generado exitosamente')
       } catch (error) {
         console.error('Error al generar QR:', error)
@@ -46,7 +47,8 @@ export default {
   },
 
   async mounted() {
-    await this.generarQR()
+    console.log(this.website)
+    await this.generarQR(this.website)
   }
 }
 </script>
