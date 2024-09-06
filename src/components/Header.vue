@@ -13,7 +13,7 @@
                     </span>
                 </button>
             </div>
-            <img :src="imgurl" alt="Logo" loading="lazy">
+            <img :src="urlLogo" alt="Logo" loading="lazy">
             <div class="bts-header">
                 <button data-bs-toggle="offcanvas" :data-bs-target="'#offcanvasRight_new'+id" :aria-controls="'offcanvasRight_new'+id">
                     <AddIcon class="icon-header"/>
@@ -40,7 +40,7 @@
             </div>
         </div>
         <Notificaciones @ordersLength="setOrderLength"/>
-        <Configuracion/>
+        <Configuracion @newLogo="getNewLogo"/>
     </div>
 </template>
 
@@ -52,7 +52,7 @@ import AddIcon from './icons/AddIcon.vue'
 import House from './icons/House.vue'
 import ListMenu from './icons/ListMenu.vue'
 import LoginButton from './LoginButton.vue'
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import HomeButton from './HomeButton.vue'
 import AddCategoriaBt from './AddCategoriaBt.vue'
 import AddPlatoBt from './AddPlatoBt.vue'
@@ -99,7 +99,8 @@ export default {
             cuentas: [],
             ordenes: [],
             nuevas: 0,
-            showSetting: false
+            showSetting: false,
+            urlLogo: this.urlLogo
         }
     },
     provide(){
@@ -109,6 +110,10 @@ export default {
         }
     },
     methods: {
+        getNewLogo(newLogo){
+            this.urlLogo = newLogo
+        },//getNewLogo
+
         showSettings(){
             this.showSetting = !this.showSetting
             console.log(this.showSetting)
@@ -167,8 +172,13 @@ export default {
             }, 200)
         },
     },//methods
+    watch: {
+    // Observar cambios en el prop imgurl
+        imgurl(newVal) {
+        this.urlLogo = newVal;  // Actualizar urlLogo cuando imgurl cambia
+        },
+    },//watch
     async created() {
-
         const cuentasRef = this.query(this.collection(this.db, 'ordenes'), this.where('menu', '==', this.globalUser.menu))
         //const cuentasRef = this.collection(this.db, 'menus', this.globalUser.menu, 'cuentas')
         this.unsub = this.onSnapshot(cuentasRef, (snaphot)=>{

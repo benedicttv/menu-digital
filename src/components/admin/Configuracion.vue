@@ -10,6 +10,12 @@
         <form @submit="guardarSetting">
           <div class="row mb-3 mt-3">
             <img v-if="info.menu && info.menu.logoURL" :src="info.menu.logoURL" height="50" class="object-fit-contain " :alt="info.menu.nombre">
+            <!-- Botón para cambiar el logo -->
+            <button type="button" class="btn btn-outline-primary mt-2 btn-sm" style="margin: auto; max-width: 150px;" @click="triggerFileInput">
+                Cambiar Logo
+            </button>
+            <!-- Input de archivo oculto -->
+            <input type="file" ref="logoInput" @change="handleFileUpload" accept="image/png, image/jpeg" style="display: none;">
           </div>
           <p class="fw-bold mb-3">Impuestos:</p>
           <div class="input-group mb-3">
@@ -65,27 +71,78 @@
 </template>
 
 <script setup>
-import { ref, reactive, inject, onMounted, watch } from 'vue'
-import { getFirestore, doc, setDoc, updateDoc, deleteDoc,collection, query, where, getDoc, getDocs, onSnapshot, arrayUnion, arrayRemove, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { ref as vueRef, reactive, inject, onMounted, watch } from 'vue'
+import { defineEmits } from 'vue';
+import { getFirestore, doc, setDoc, updateDoc, deleteDoc,collection, query, where, getDoc, getDocs, onSnapshot, arrayUnion, arrayRemove, increment} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, uploadString} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+import bajarResolucionImg from "../../main.js"
 //descargar la configuración del restaurant
 const globalUser = inject('globalUser')
 const db = inject('db')
-const offcanvasElement = ref(null)
+const offcanvasElement = vueRef(null)
 const info = reactive({menu: null})
 const mostrar = inject('show_setting')
-const loading = ref(false)
+const loading = vueRef(false)
 const docRef = doc(db, 'menus', globalUser.value.menu)
-const ordenarMesa = ref(false)
-const ordenarDelivery = ref(false)
-const mesas = ref([null])
-const itbis = ref(18)
-const propina = ref(10)
-const guardarImpuestos = ref(false)
-const whatsapp = ref('')
-const whatsappError = ref(true)
-const costoDelivery = ref(0)
+const ordenarMesa = vueRef(false)
+const ordenarDelivery = vueRef(false)
+const mesas = vueRef([null])
+const itbis = vueRef(18)
+const propina = vueRef(10)
+const guardarImpuestos = vueRef(false)
+const whatsapp = vueRef('')
+const whatsappError = vueRef(true)
+const costoDelivery = vueRef(0)
+const logoInput = vueRef(null)
+const emit = defineEmits(['newLogo'])
 
 //funciones
+
+//Funcion para abir el input del logo
+const triggerFileInput = () => {
+  logoInput.value.click()
+}
+
+const handleFileUpload = async (event) => {
+  if (event.target.files && event.target.files[0]) {
+    const archivo = event.target.files[0]
+    const reader = new FileReader()
+
+    reader.onload = async (e) => {
+      const imageUrl = e.target.result  // El contenido de la imagen como data URL
+
+      try {
+        // Crear un elemento de imagen para pasar a bajarResolucionImg
+        const img = new Image()
+        img.src = imageUrl
+
+        // Usar bajarResolucionImg para obtener la versión de baja resolución
+        const lowResImageUrl = await bajarResolucionImg(img)
+
+        // Mostrar la nueva imagen de baja resolución antes de subirla
+        info.menu.logoURL = lowResImageUrl
+
+        // Subir la imagen de baja resolución a Firebase Storage
+        const storage = getStorage()
+        const logoRef = ref(storage, `logo_${globalUser.value.menu}`)
+        await uploadString(logoRef, lowResImageUrl, 'data_url')
+        const url = await getDownloadURL(logoRef)
+        
+        // Actualiza el menú con la nueva URL del logo
+        await updateDoc(docRef, {
+          logoURL: url
+        })
+        emit('newLogo', url)
+        console.log('Logo actualizado con éxito')
+      } catch (error) {
+        console.error('Error al procesar o subir el logo:', error)
+      }
+    }
+
+    reader.readAsDataURL(archivo)
+  }
+}//handleFileUpload
+
 const getSetting = async ()=>{
   try {
     //console.log(globalUser.value.menu)

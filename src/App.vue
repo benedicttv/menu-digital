@@ -29,7 +29,7 @@ import AddCategoria from './components/AddCategoria.vue'
 import Header from './components/Header.vue'
 import LoginScreen from './components/LoginScreen.vue'
 import Home from './components/Home.vue'
-import { computed } from 'vue'
+import { computed, onUpdated, ref } from 'vue'
 import ModalBackground from './components/ModalBackground.vue'
 import MenuScreen from './components/MenuScreen.vue'
 import PublicScreen from './components/PublicScreen.vue'
@@ -61,7 +61,7 @@ export default{
       createMenuForm_screen: false,
       menuScreen_screen: false,
       menu_url: null,
-      website: null
+      website: null,
 
     }
   },
@@ -73,6 +73,9 @@ export default{
     }
   },
   methods:{
+    updateLogoUrl(newUrl) {
+      this.logoUrl.value = newUrl;  // Actualizar la URL global del logo
+    },
     abrirFormNuevoMenu(){
       console.log('Abriendo formulario')
       this.optionsContainer_screen = false

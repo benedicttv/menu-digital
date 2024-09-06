@@ -77,7 +77,7 @@ const bajarResolucionImg = async (img) => {
   }
 }
 
-
+export default bajarResolucionImg;
 
 const app = createApp(App)
 
