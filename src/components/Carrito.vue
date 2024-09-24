@@ -169,13 +169,17 @@ export default {
             //actualizar el numero de la orden
             await this.updateDoc(this.doc(this.db, 'menus', this.id_menu), {numOrden: this.increment(1)})
             this.loading = false
-
             if(this.ordenar_para=='delivery'){
-                let messeger = `Hola, les he enviado la orden #${orden_info.numOrden} con lo siguiente: \n`
+                let messeger = `Hola! Me gustaria ordenar lo siguiente: \n`
+                
                 for(const [clave, valor] of Object.entries(orden_info.items)){
-                    messeger += `-${valor.cantidad}x ${valor.plato.nombre}\n`
+                    let alterntiva_name = ''
+                    if(valor.alternativa){
+                        alterntiva_name = `- ${valor.plato.opcionesPlato.name}: ${valor.plato.opcionesPlato[valor.alternativa].name}`
+                    }
+                    messeger += `-${valor.cantidad}x ${valor.plato.nombre} ${alterntiva_name}\n`
                 }
-                messeger += '\nPor favor confirmar'
+                messeger += `\n Espero confirmación ( #${orden_info.numOrden} )`
 
                 const textoWhatsApp = encodeURIComponent(messeger);
                 window.open(`https://wa.me/1${this.menuSetting.whatsapp}?text=${textoWhatsApp}`, '_blank')

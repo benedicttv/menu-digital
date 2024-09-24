@@ -32,8 +32,8 @@ export default {
 
             if (navigator.share) {
                 navigator.share({
-                title: 'Nuestro Menú',
-                text: 'Menú | '+this.nombreNegocio,
+                /* title: 'Nuestro Menú',
+                text: 'Menú | '+this.nombreNegocio, */
                 url: url
                 }).then(() => {
                 console.log('Enlace compartido exitosamente');

@@ -10,7 +10,8 @@
             <div style="font-family: var(--font-3)"  v-for="(alternativa, clave) in data.opcionesPlato" :key="clave">
                 <div class="alternativas" v-if="alternativa.name">
                     <span>{{alternativa.name}}</span>
-                    <span>{{(alternativa.precio+data.precio).toLocaleString('en-EN', { style: 'currency', currency: 'DOP' })}}</span>
+                    <span>{{ alternativa.precio === 0 ? '' : `+${alternativa.precio}` }}</span>
+                    <!-- <span>+{{(alternativa.precio+data.precio).toLocaleString('en-EN', { style: 'currency', currency: 'DOP' })}}</span> -->
                 </div>
             </div>
         </div>
