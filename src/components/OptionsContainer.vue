@@ -27,7 +27,7 @@
         <div class="icon-bt">
           <i class="bi bi-whatsapp"></i>
         </div>
-        <span class="text-icon">Servicio al cliente  <i class="bi bi-box-arrow-up-right"></i></span>
+        <span class="text-icon">Ayuda / Info  <i class="bi bi-box-arrow-up-right"></i></span>
       </a><!-- bt-lista -->
 
     </div>

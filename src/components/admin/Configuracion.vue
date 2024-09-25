@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-import { ref as vueRef, reactive, inject, onMounted, watch } from 'vue'
+import { ref as vueRef, reactive, inject, onMounted, watch, computed } from 'vue'
 import { defineEmits } from 'vue';
 import { getFirestore, doc, setDoc, updateDoc, deleteDoc,collection, query, where, getDoc, getDocs, onSnapshot, arrayUnion, arrayRemove, increment} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, uploadString} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
@@ -95,6 +95,9 @@ const whatsappError = vueRef(true)
 const costoDelivery = vueRef(0)
 const logoInput = vueRef(null)
 const emit = defineEmits(['newLogo'])
+const itbisInput = ref('')
+const propinaInput = ref('')
+const costoDeliveryInput = ref('')
 
 //funciones
 
@@ -236,9 +239,9 @@ const saveImpuestos= async ()=>{
   loading.value = true
   guardarImpuestos.value = false
   await updateDoc(docRef, {
-    'itbis': itbis.value,
-    'propina': propina.value,
-    'costoDelivery': costoDelivery.value
+    'itbis': itbis.value === '' ? 0: itbis.value,
+    'propina': propina.value === '' ? 0: propina.value,
+    'costoDelivery': costoDelivery.value === '' ? 0: costoDelivery.value
   })
   loading.value = false
 }

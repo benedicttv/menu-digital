@@ -26,7 +26,7 @@
         }
     },
     mounted() {
-        this.text = `Hola, %0ANecesito información sobre los menús digitales.%0A%0A${this.globalUser.name}`;
+        this.text = `Hola, %0ANecesito ayuda/info sobre el menú digital.%0A%0A${this.globalUser.name}`;
     }
     }
 </script>
